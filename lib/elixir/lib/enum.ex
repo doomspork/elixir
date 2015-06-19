@@ -1436,6 +1436,22 @@ defmodule Enum do
   end
 
   @doc """
+  Invokes `fun` for each element in the collection passing that element and the
+  accumulator `acc` as arguments. `fun`'s return value is expected to be
+  `{:cont, acc}`, return `{:halt, acc} to end the reduction.
+  Returns the accumulator.
+
+  ## Examples
+    iex> Enum.reduce_while(1..100, 0, fn i, acc ->
+          if i <= 3, do: {:cont, acc + i}, else: {:halt, acc}
+        end)
+    6
+  """
+  def reduce_while(collection, acc, fun) do
+    Enumerable.reduce(collection, {:cont, acc}, fun) |> elem(1)
+  end
+
+  @doc """
   Returns elements of collection for which `fun` returns `false` or `nil`.
 
   ## Examples
