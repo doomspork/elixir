@@ -175,6 +175,9 @@ defmodule Mix.Tasks.Format do
         check_formatted? and input != output_string ->
           {:not_formatted, file}
 
+        equivalent?(input, output_string) ->
+          :ok
+
         true ->
           write_or_print(file, output, check_formatted?, task_opts)
       end
